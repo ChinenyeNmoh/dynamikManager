@@ -4,12 +4,10 @@ import axios from 'axios';
 import LoadingPage from '@/app/loading';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import Link from 'next/link';
-import Header from '@/components/Header';
-import { FaArrowLeft } from 'react-icons/fa';
 import SlideBar from '@/components/SlideBar';
+import Header from '@/components/Header';
 
-const page = () => {
+const Page = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -58,174 +56,165 @@ const page = () => {
     fetchProjects();
   }, []);
 
+ 
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try{
-        const {data} = await axios.post('http://localhost:5000/api/tasks', {
-            title: taskTitle,
-            description,
-            dueDate,
-            priority,
-            status,
-            assignedTo,
-            project,
-          }, {
-            withCredentials: true,
-          });
-        console.log(data);
-        toast.success('Task created successfully!');
-        router.push(`/tasks/${data.savedTask._id}`);
-    }catch(error){
-        console.error(error.response.data.message || 'Something went wrong');
+    try {
+      const { data } = await axios.post('http://localhost:5000/api/tasks', {
+        title: taskTitle,
+        description,
+        dueDate,
+        priority,
+        status,
+        assignedTo,
+        project,
+      }, {
+        withCredentials: true,
+      });
+      router.push(`/tasks/${data.savedTask._id}`);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || 'An error occurred while creating the task');
+      console.error(error);
     }
-    
   };
 
   return (
     <>
-     <div className='flex w-full h-auto p-3'>
-      <div>
+      <div className='flex w-full h-auto p-3'>
         <SlideBar />
+        <main className="w-full h-full mb-10 m-2">
+          <Header />
+          {loading && <LoadingPage />}
+          <div className="flex justify-center items-center mt-10">
+            <form
+              className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6"
+              onSubmit={handleFormSubmit}
+            >
+              <div className="text-center text-xl font-bold mb-4">Add New Task</div>
+              {/* Task Title */}
+              <div>
+                <label className="block text-sm font-bold text-gray-700">Task Title</label>
+                <input
+                  type="text"
+                  value={taskTitle}
+                  onChange={(e) => setTaskTitle(e.target.value)}
+                  className="w-full border p-2 rounded-lg text-gray-700"
+                  required
+                />
+              </div>
+
+              {/* Project Selection */}
+              <div className="mb-2">
+                <label className="block text-sm font-bold text-gray-700">Add Project</label>
+                <select
+                  name="project"
+                  value={project || ''}
+                  required
+                  onChange={(e) => setProject(e.target.value)}
+                  className="w-full border p-2 rounded-lg text-gray-700"
+                >
+                  <option value="">Select Project</option>
+                  {projects.map((proj) => (
+                    <option key={proj._id} value={proj._id}>
+                      {proj.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Description */}
+              <div className="mb-2">
+                <label className="block text-sm font-bold text-gray-700">Description</label>
+                <textarea
+                  name="description"
+                  value={description || ''}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                  className="w-full border p-2 rounded-lg text-gray-700"
+                ></textarea>
+              </div>
+
+              {/* Priority, Status, Due Date, Assigned To */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700">Priority</label>
+                  <select
+                    name="priority"
+                    value={priority || ''}
+                    onChange={(e) => setPriority(e.target.value)}
+                    required
+                    className="w-full border p-2 rounded-lg text-gray-700"
+                  >
+                    <option value="">Select priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700">Status</label>
+                  <select
+                    name="status"
+                    value={status || ''}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="w-full border p-2 rounded-lg text-gray-700"
+                    required
+                  >
+                    <option value="">Select status</option>
+                    <option value="to-do">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="done">Completed</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700">Due Date</label>
+                  <input
+                    type="date"
+                    name="dueDate"
+                    value={dueDate || ''}
+                    onChange={(e) => setDueDate(e.target.value)}
+                    className="w-full border p-2 rounded-lg text-gray-700"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700">Assigned To</label>
+                  <select
+                    name="assignedTo"
+                    value={assignedTo || ''}
+                    onChange={(e) => setAssignedTo(e.target.value)}
+                    className="w-full border p-2 rounded-lg text-gray-700"
+                    required
+                  >
+                    <option value="">Select user</option>
+                    {users.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex space-x-4 mt-4">
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg block mx-auto"
+                >
+                  Add Task
+                </button>
+              </div>
+            </form>
+          </div>
+        </main>
       </div>
-      <main className="w-full h-full mb-10  m-2">
-        <Header />
-     
-      {loading && <LoadingPage />}
-    <div className="flex justify-center items-center mt-10">
-      
-      <form
-        className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6"
-        onSubmit={handleFormSubmit}
-      >
-        <div className="text-center text-xl font-bold mb-4">Add New Task</div>
-        
-
-        {/* Project Selection */}
-        <div className="flex flex-col justify-between h-full space-y-6">
-          {/* Task Title */}
-          <div className="">
-            <label className="block text-sm font-bold text-gray-700">Task Title</label>
-            <input
-              type="text"
-              value={taskTitle}
-              onChange={(e) => setTaskTitle(e.target.value)}
-              className="w-full border p-2 rounded-lg text-gray-700 "
-              required
-            />
-          </div>
-        </div>
-        <div className="mb-2">
-          <label className="block text-sm font-bold text-gray-700">Add Project</label>
-          <select
-            name="project"
-            value={project || ''}
-            required
-            onChange={(e) => setProject(e.target.value)}
-            className="w-full border p-2 rounded-lg text-gray-700"
-          >
-            <option value="">Select Project</option>
-            {projects.map((proj) => (
-              <option key={proj._id} value={proj._id}>
-                {proj.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Description */}
-        <div className="mb-2">
-          <label className="block text-sm font-bold text-gray-700">Description</label>
-          <textarea
-            name="description"
-            value={description || ''}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            className="w-full border p-2 rounded-lg text-gray-700"
-          ></textarea>
-        </div>
-
-        {/* Priority, Status, Due Date, Assigned To */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-bold text-gray-700">Priority</label>
-            <select
-              name="priority"
-              value={priority || ''}
-              onChange={(e) => setPriority(e.target.value)}
-              required
-              className="w-full border p-2 rounded-lg text-gray-700"
-            >
-              <option value="">Select priority</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-gray-700">Status</label>
-            <select
-              name="status"
-              value={status || ''}
-              onChange={(e) => setStatus(e.target.value)}
-              className="w-full border p-2 rounded-lg text-gray-700"
-              required
-            >
-              <option value="">Select status</option>
-              <option value="to-do">Not Started</option>
-              <option value="in-progress">In Progress</option>
-              <option value="done">Completed</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-gray-700">Due Date</label>
-            <input
-              type="date"
-              name="dueDate"
-              value={dueDate || ''}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="w-full border p-2 rounded-lg text-gray-700"
-              placeholder="dd/mm/yyyy"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-gray-700">Assigned To</label>
-            <select
-              name="assignedTo"
-              value={assignedTo || ''}
-              onChange={(e) => setAssignedTo(e.target.value)}
-              className="w-full border p-2 rounded-lg text-gray-700"
-              required
-            >
-              <option value="">Select user</option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex space-x-4 mt-4">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg block mx-auto"
-          >
-            Add Task
-          </button>
-        </div>
-      </form>
-    </div>
-    </main>
-    </div>
     </>
   );
 };
 
-export default page;
-
+export default Page;

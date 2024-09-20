@@ -3,9 +3,15 @@ import Project from '../models/projectModel.js';
 import Message from '../models/messageModel.js';
 import User from '../models/userModel.js'; // Import User model
 import {  sendEmail, taskCreatedTemplate } from "../utils/mail.js";
+import {wss} from '../server.js';
 
 const createTask = async (req, res) => {
   try {
+    // Validate request data
+    const alreadyExists = await Task.findOne({ title: req.body.title });
+    if (alreadyExists) {
+      return res.status(400).json({ message: 'Task already exists with this title' });
+    }
     const newTask = {
       title: req.body.title,
       description: req.body.description,
@@ -20,12 +26,10 @@ const createTask = async (req, res) => {
     // Create the task
     const savedTask = await Task.create(newTask);
 
-    // Check if the task is assigned to the current user (self)
     if (req.body.assignedTo.toString() === req.user._id.toString()) {
       return res.status(400).json({ message: 'You cannot send a message to yourself' });
     }
 
-    // Populate the assignedTo field to get the user details
     const assignedUser = await User.findById(req.body.assignedTo).select('name email');
 
     if (!assignedUser) {
@@ -37,15 +41,13 @@ const createTask = async (req, res) => {
       sender: savedTask.createdBy,
       recipient: savedTask.assignedTo,
       task: savedTask._id,
-      name: assignedUser.name, 
-      email: assignedUser.email, 
+      name: assignedUser.name,
+      email: assignedUser.email,
       body: savedTask.description,
     });
 
-    // Save the message to the database
-    await newMessage.save();
 
-    // Send the email notification to the assigned user
+    await newMessage.save();
     try {
       const htmlContent = taskCreatedTemplate(savedTask, assignedUser);
       await sendEmail(assignedUser.email, 'Task Notification', htmlContent);
@@ -53,6 +55,16 @@ const createTask = async (req, res) => {
       console.log('Email sending failed', emailError.message);
       return res.status(500).json({ message: 'Task created, but email sending failed', error: emailError });
     }
+
+    // Notify all connected clients about the new task
+    wss.clients.forEach((client) => {
+      if (client.readyState === client.OPEN) {
+        client.send(JSON.stringify({
+          type: 'task-creation',
+          message: `New task created: ${savedTask.title}`,
+        }));
+      }
+    });
 
     res.status(201).json({ message: 'Task created and message sent', savedTask });
   } catch (error) {
@@ -94,12 +106,24 @@ const updateTaskById = async (req, res) => {
     console.log(req.body);
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedTask) return res.status(404).json({ message: 'Task not found' });
-    res.status(200).json({updatedTask});
+
+    // Notify all connected clients about the updated task
+    wss.clients.forEach((client) => {
+      if (client.readyState === client.OPEN) {
+        client.send(JSON.stringify({
+          type: 'task-update',
+          message: `Task updated: ${updatedTask.title}`,
+        }));
+      }
+    });
+
+    res.status(200).json({ updatedTask });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message:  error.message });
+    res.status(500).json({ message: error.message });
   }
 };
+
 
 // DELETE a task by ID
 const deleteTaskById = async (req, res) => {

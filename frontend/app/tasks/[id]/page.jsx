@@ -53,7 +53,7 @@ const Page = () => {
       fetchTask();
     }
   }, [id]); 
-  console.log(task);
+  
 
 
   // Fetch users
@@ -105,7 +105,7 @@ if (result.isConfirmed) {
 };
 // Check if the due date is within 24 hours
 const isDueSoon = task?.dueDate && new Date(task.dueDate) - new Date() <= 24 * 60 * 60 * 1000;
-console.log('task id', task?.assignedTo?._id, userInfo?._id);
+
 
   return (
     <>

@@ -33,25 +33,26 @@ const Page = () => {
         const response = await axios.get(`http://localhost:5000/api/tasks/${id}`, {
           withCredentials: true,
         });
-        const taskData = response.data.task;
+        const taskData = response?.data?.task;
         setTask(taskData);
         setTitle(taskData?.title);
         setDescription(taskData?.description);
         setPriority(taskData?.priority);
-        setProject(taskData?.project._id);
+        setProject(taskData?.project?._id);
         setStatus(taskData?.status);
         setDueDate(taskData?.dueDate); 
-        setAssignedTo(taskData?.assignedTo._id);
+        setAssignedTo(taskData?.assignedTo?._id);
       } catch (error) {
         console.log(error.message || error.response.data.message);
-        toast.error('Failed to fetch task');
+        toast.error(error.message || error.response.data.message);
       } finally {
         setLoading(false);
       }
     };
     fetchTask();
   }, [id]);
-  console.log('project', project);
+  
+
 
   // Fetch userInfo from localStorage only on the client-side
   useEffect(() => {
@@ -98,7 +99,6 @@ const Page = () => {
       }, {
         withCredentials: true,
       });
-      toast.success('Task updated successfully!');
       router.push(`/tasks/${id}`);
     } catch (error) {
       console.error(error.response?.data?.message || 'Something went wrong');
