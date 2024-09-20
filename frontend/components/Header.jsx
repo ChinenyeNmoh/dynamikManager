@@ -9,12 +9,12 @@ function Header() {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await axios.get('http://localhost:5000/api/messages/user',
+      const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/messages/user',
         {
           withCredentials: true,
         }
       );
-      setNotificationCount(response.data.messageCount);
+      setNotificationCount(response?.data?.messageCount);
       
     };
     fetchNotifications();

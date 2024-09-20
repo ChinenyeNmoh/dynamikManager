@@ -24,7 +24,7 @@ const Page = () => {
     }
   }, []);
 
-  const url = `http://localhost:5000/api/users/users`;
+  const url = `https://dynamikmanager.dynamikservices.tech/api/users/users`;
   useEffect(() => {
     const fetchUsers = async () => {
       try {

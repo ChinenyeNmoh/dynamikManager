@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/tasks/', {
+        const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/tasks/', {
           credentials: 'include',
           withCredentials: true,
         });

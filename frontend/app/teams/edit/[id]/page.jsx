@@ -27,8 +27,8 @@ const Page = () => {
       try {
         setLoading(true);
         const [projectsResponse, usersResponse] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects', { withCredentials: true }),
-          axios.get('http://localhost:5000/api/users/users', { withCredentials: true }),
+          axios.get('https://dynamikmanager.dynamikservices.tech/api/projects', { withCredentials: true }),
+          axios.get('https://dynamikmanager.dynamikservices.tech/api/users/users', { withCredentials: true }),
         ]);
         setProjectsData(projectsResponse.data.projects);
         setUsers(usersResponse.data.users);
@@ -47,7 +47,7 @@ const Page = () => {
     const fetchTeam = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/teams/${id}`, {
+        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/teams/${id}`, {
           withCredentials: true,
         });
         const teamData = response.data.team;
@@ -88,8 +88,8 @@ const Page = () => {
   const handleMemberChange = (memberId) => {
     setMembers((prevMembers) =>
       prevMembers.includes(memberId)
-        ? prevMembers.filter((id) => id !== memberId) // Unselect if already selected
-        : [...prevMembers, memberId] // Select if not selected
+        ? prevMembers.filter((id) => id !== memberId) 
+        : [...prevMembers, memberId] 
     );
   };
 
@@ -98,7 +98,7 @@ const Page = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/teams/${id}`,
+        `https://dynamikmanager.dynamikservices.tech/api/teams/${id}`,
         { name, projects, members },
         { withCredentials: true }
       );

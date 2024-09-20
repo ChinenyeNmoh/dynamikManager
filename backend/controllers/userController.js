@@ -78,7 +78,7 @@ const verifyToken = asyncHandler(async (req, res) => {
     const user = await User.findById(id);
   
     if (!user) {
-        return res.status(400).redirect(`http://localhost:3000/?error=${encodeURIComponent('User not found')}`);
+        return res.status(400).redirect(`https://dynamikmanager.dynamikservices.tech/?error=${encodeURIComponent('User not found')}`);
     }
   
     const userToken = await Token.findOne({
@@ -88,7 +88,7 @@ const verifyToken = asyncHandler(async (req, res) => {
     });
   
     if (!userToken) {
-        return res.status(400).redirect(`http://localhost:3000/?error=${encodeURIComponent('Expired or invalid token.')}`);
+        return res.status(400).redirect(`https://dynamikmanager.dynamikservices.tech/?error=${encodeURIComponent('Expired or invalid token.')}`);
     }
   
     // Token is valid, update the user and delete the token
@@ -99,7 +99,7 @@ const verifyToken = asyncHandler(async (req, res) => {
     );
   
     await Token.findByIdAndDelete(userToken._id);
-    res.status(200).redirect(`http://localhost:3000/login?message=${encodeURIComponent("Email verified successfully. you can login")}`);
+    res.status(200).redirect(`https://dynamikmanager.dynamikservices.tech/login?message=${encodeURIComponent("Email verified successfully. you can login")}`);
   });
 
 
@@ -242,7 +242,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     const user = await User.findById(id);
   
     if (!user) {
-        return res.status(400).redirect(`http://localhost:3000/login?error=${encodeURIComponent('User not found')}`);
+        return res.status(400).redirect(`https://dynamikmanager.dynamikservices.tech/login?error=${encodeURIComponent('User not found')}`);
     }
   
     const userToken = await Token.findOne({
@@ -252,14 +252,14 @@ const resetPassword = asyncHandler(async (req, res) => {
     });
   
     if (!userToken) {
-        return res.status(400).redirect(`http://localhost:3000/login?error=${encodeURIComponent('Invalid or expired token')}`);
+        return res.status(400).redirect(`https://dynamikmanager.dynamikservices.tech/login?error=${encodeURIComponent('Invalid or expired token')}`);
     }
 
     // The TTL index will automatically remove expired tokens, but you can manually remove it after use
     await userToken.deleteOne();
 
     // Redirect to the password update page
-    return res.status(200).redirect(`http://localhost:3000/resetpassword/?id=${user._id}&message=${encodeURIComponent('Please update your password')}`);
+    return res.status(200).redirect(`https://dynamikmanager.dynamikservices.tech/resetpassword/?id=${user._id}&message=${encodeURIComponent('Please update your password')}`);
 });
 
 

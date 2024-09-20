@@ -31,7 +31,7 @@ const Page = () => {
     }
   }, []);
 
-  const url =  'http://localhost:5000/api/users/profile';
+  const url =  'https://dynamikmanager.dynamikservices.tech/api/users/profile';
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -52,7 +52,7 @@ const Page = () => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get('http://localhost:5000/api/tasks/', {
+        const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/tasks/', {
           withCredentials: true,
         });
         setTaskData(data.tasks);
@@ -78,7 +78,7 @@ const Page = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${id}`, { withCredentials: true });
+        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/users/${id}`, { withCredentials: true });
         toast.success("User deleted");
         router.push("/dashboard");
       } catch (error) {

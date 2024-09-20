@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const {data} = await axios.post('http://localhost:5000/api/users/login',{ email, password },
+      const {data} = await axios.post('https://dynamikmanager.dynamikservices.tech/api/users/login',{ email, password },
         {
           credentials: 'include',
           withCredentials: true,
@@ -39,9 +39,9 @@ const Login = () => {
       );
       console.log(data);
       toast.success(data.message);
-      setLoading(false);
       localStorage.setItem('userInfo', JSON.stringify(data?.user));
       router.push('/dashboard');
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || 'An error occurred while attempting to sign in');

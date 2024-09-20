@@ -7,7 +7,8 @@ import "@/assets/styles/globals.css";
 
 const MainLayout = ({ children }) => {
   useEffect(() => {
-    const websocket = new WebSocket('ws://localhost:5000'); // Adjust URL to match your server
+    const websocket = new WebSocket('wss://dynamikmanager.dynamikservices.tech/');
+    // Adjust URL to match your server
 
     websocket.onopen = () => {
       console.log('WebSocket connection established');
@@ -52,8 +53,6 @@ const MainLayout = ({ children }) => {
           position="top-center" 
           hideProgressBar={false}
           enableMultiContainer={true}
-          
-           
 
           />
           {children}

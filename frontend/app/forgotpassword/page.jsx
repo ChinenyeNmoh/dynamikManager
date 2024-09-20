@@ -25,7 +25,7 @@ const error = searchParams.get('error');
     const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const {data} = await axios.post('http://localhost:5000/api/users/forgotpassword',{ email });
+        const {data} = await axios.post('https://dynamikmanager.dynamikservices.tech/api/users/forgotpassword',{ email });
         toast.success(data.message);
         setEmail('');
 

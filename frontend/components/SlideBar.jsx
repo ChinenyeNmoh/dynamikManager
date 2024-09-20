@@ -60,7 +60,7 @@ const SlideBar = () => {
     useEffect(() => {
         const checkUserSession = async () => {
             try {
-                await axios.get(`http://localhost:5000/api/users/profile`, {
+                await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/profile`, {
                     withCredentials: true,
                 });
             } catch (error) {
@@ -100,7 +100,7 @@ const SlideBar = () => {
 
         if (result.isConfirmed) {
             try {
-                await axios.get(`http://localhost:5000/api/users/logOut`, { withCredentials: true });
+                await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/logOut`, { withCredentials: true });
                 localStorage.removeItem("userInfo");
                 router.push("/");
                 toast.success("Logged out successfully");

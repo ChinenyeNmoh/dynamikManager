@@ -32,7 +32,7 @@ const Page = () => {
     const fetchTeam = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/teams/${id}`,
+        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/teams/${id}`,
             {
                 withCredentials: true,
             }
@@ -56,7 +56,7 @@ const Page = () => {
     const fetchProjects = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.get('http://localhost:5000/api/projects/', {
+            const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/projects/', {
                 withCredentials: true,
             });
             setProjectsData(data.projects);
@@ -83,7 +83,7 @@ const Page = () => {
 
     if (result.isConfirmed) {
       try {
-          await axios.delete(`http://localhost:5000/api/teams/${id}`, { withCredentials: true });
+          await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/teams/${id}`, { withCredentials: true });
           toast.success("Team deleted");
           router.push("/allteams");
       } catch (error) {

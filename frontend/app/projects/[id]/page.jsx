@@ -35,7 +35,7 @@ const Page = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/users/users`, {
+        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/users`, {
           withCredentials: true,
         });
         setUsers(response.data.users);
@@ -53,7 +53,7 @@ const Page = () => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/projects/${id}`, {
+        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, {
           withCredentials: true,
         });
         
@@ -81,7 +81,7 @@ const handleDelete = async () => {
 
 if (result.isConfirmed) {
     try {
-        await axios.delete(`http://localhost:5000/api/projects/${id}`, { withCredentials: true });
+        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, { withCredentials: true });
         router.push("/allprojects");
         toast.success("Product deleted ");
 

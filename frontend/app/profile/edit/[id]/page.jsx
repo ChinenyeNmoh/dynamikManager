@@ -19,7 +19,7 @@ const Page = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState(null);
 
-  const url = `http://localhost:5000/api/users/${id}`;
+  const url = `https://dynamikmanager.dynamikservices.tech/api/users/${id}`;
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -60,7 +60,7 @@ const Page = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/users/${id}`,
+        `https://dynamikmanager.dynamikservices.tech/api/users/${id}`,
         { name, email, role },
         {
           withCredentials: true,
