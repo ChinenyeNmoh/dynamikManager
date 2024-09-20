@@ -84,7 +84,7 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
           >
             <option value="">All Projects</option>
             {projects.map((project) => (
-              <option key={project._id} value={project._id}>{project.name}</option>
+              <option key={project?._id} value={project?._id}>{project?.name}</option>
             ))}
           </select>
         </div>
@@ -103,7 +103,7 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
           >
             <option value="">All Teams</option>
             {teams.map((team) => (
-              <option key={team._id} value={team._id}>{team.name}</option>
+              <option key={team?._id} value={team?._id}>{team?.name}</option>
             ))}
           </select>
         </div>
