@@ -56,6 +56,8 @@ const Page = () => {
     fetchProjects();
   }, []);
 
+  console.log(users, projects);
+
  
 
   const handleFormSubmit = async (e) => {
