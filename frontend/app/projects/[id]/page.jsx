@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { useParams } from 'next/navigation';
 import Priority from '@/components/Priority';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Header from '@/components/Header';
 import SlideBar from '@/components/SlideBar';
@@ -17,6 +16,7 @@ const Page = () => {
   const [users, setUsers] = useState([]);
   const [project, setProject] = useState([]);
   const router = useRouter();
+  const [tasksData, setTasksData] = useState([]);
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState(null);
 
@@ -48,6 +48,25 @@ const Page = () => {
     fetchUsers();
   }, []);
 
+  // Fetch tasks
+  useEffect(() => {
+    const fetchTasks = async () => {
+        try {
+            setLoading(true);
+            const { data } = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/tasks`, {
+                params: { page, limit },
+                withCredentials: true,
+            });
+            setTasksData(data?.tasks);
+            setLoading(false);
+        } catch (error) {
+            console.log('error', error.message);
+            setLoading(false);
+        }
+    };
+    fetchTasks();
+  }, []);
+
   // Fetch projects
   useEffect(() => {
     const fetchProject = async () => {
@@ -66,99 +85,137 @@ const Page = () => {
       }
     };
     fetchProject();
-  }, []);
+  }, [id]);
 
-const handleDelete = async () => {
-  const result = await Swal.fire({
-    title: "Are you sure?",
-    text: "This project will be deleted.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#F8444F",
-    cancelButtonColor: "#6b7280",
-    confirmButtonText: "Yes, Delete"
-});
+  const handleDelete = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This project will be deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#F8444F",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, Delete"
+    });
 
-if (result.isConfirmed) {
-    try {
+    if (result.isConfirmed) {
+      try {
         await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, { withCredentials: true });
         router.push("/allprojects");
-        toast.success("Product deleted ");
-
-    } catch (error) {
-       console.error("Error logging out:", error);
+        toast.success("Project deleted");
+      } catch (error) {
+        console.error("Error deleting:", error);
         toast.error(error?.response?.data?.message || "An error occurred");
+      }
     }
-}
-};
+  };
+
+  const tasksToDisplay = tasksData?.filter((task) => task?.project === id);
 
   return (
     <>
-    <div className='flex w-full h-auto p-3'>
-      <div>
-        <SlideBar />
-      </div>
-      <main className="w-full h-full mb-10  m-2">
-        <Header />
-     
-      {loading && <LoadingPage />}
-      <div className="flex justify-center items-center mt-10 ">
-        <div
-          className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6"
-        >
-            <div className="mb-1">
-              <p className="font-bold text-xl text-gray-700">{project?.name}</p>
-              <p className="text-green-600 mt-1">{project?.description}</p>
-            </div>
-
-            <div className="mb-1 flex items-center space-x-2">
-              <Priority priority={ project?.priority} />
-              <p className="lg:text-lg text-gray-600">{project?.priority} priority</p>
-            </div>
-            <hr/>
-
-            <div className="mt-1">
-              <p className="lg:text-lg text-orange-600 font-semibold">Status: { project?.status}</p>
-              <p className="text-gray-600 lg:text-lg">
-                Assigned to: <span className="font-semibold">{ project?.team?.name || 'Unassigned'}</span>
-              </p>
-            </div>
-            
-            <hr />
-            <div>
-              <p className="text-green-600 font-semibold mb-1">Team Members:</p>
-              <ul className="pl-4 list-disc list-inside">
-                {project?.team?.members?.map((member) => (
-                  <li key={member._id} className="text-gray-700 text-sm hover:text-green-500">
-                    {member.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <hr />
-
-            <div className='flex justify-center'>
-                {userInfo?.role !== 'user' && (
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-md" onClick={() => router.push(`/projects/edit/${id}`)}>
-                    Edit Project
-                </button>
-
-                )}
-                
-                {userInfo?.role === 'admin' && (
-                    <button className="bg-red-600 text-white px-4 py-2 rounded-md ml-4" onClick={handleDelete}>
-                    Delete Project
-                </button>
-                )}
-                
-             
-            </div>
-
-          
+      <div className='flex w-full h-auto p-3'>
+        <div>
+          <SlideBar />
         </div>
-      </div>
-      </main>
+        <main className="w-full h-full mb-10 m-2">
+          <Header />
+
+          {loading && <LoadingPage />}
+          <div className="flex justify-center items-center mt-10 ">
+            <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6">
+              <div className="mb-1">
+                <p className="font-bold text-xl text-gray-700">{project?.name}</p>
+                <p className="text-green-600 mt-1">{project?.description}</p>
+              </div>
+
+              <div className="mb-1 flex items-center space-x-2">
+                <Priority priority={project?.priority} />
+                <p className="lg:text-lg text-gray-600">{project?.priority} priority</p>
+              </div>
+              <hr />
+
+              <div className="mt-1">
+                <p className="lg:text-lg text-orange-600 font-semibold">Status: {project?.status}</p>
+                <p className="text-gray-600 lg:text-lg">
+                  Assigned to: <span className="font-semibold">{project?.team?.name || 'Unassigned'}</span>
+                </p>
+              </div>
+
+              <hr />
+              <div>
+                <p className="text-green-600 font-semibold mb-1">Team Members:</p>
+                <ul className="pl-4 list-disc list-inside">
+                  {project?.team?.members?.map((member) => (
+                    <li key={member._id} className="text-gray-700 text-sm hover:text-green-500">
+                      {member.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <hr />
+              {/* Display Tasks in a Responsive Table */}
+              <div className="mt-4">
+                <h3 className="font-bold text-lg text-gray-700 mb-2">Tasks</h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full bg-white border rounded-lg">
+                    <thead>
+                      <tr className="text-left bg-gray-200">
+                        <th className="py-2 px-4">Title</th>
+                        <th className="py-2 px-4">Status</th>
+                        <th className="py-2 px-4">Priority</th>
+                        <th className="py-2 px-4">Assigned To</th>
+                        <th className="py-2 px-4">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasksToDisplay?.map((task) => (
+                        <tr key={task._id} className="border-t">
+                          <td className="py-2 px-4">{task.title}</td>
+                          <td className="py-2 px-4">{task.status}</td>
+                          <td className="py-2 px-4">{task.priority}</td>
+                          <td className="py-2 px-4">{task.assignedTo?.name || 'Unassigned'}</td>
+                          <td className="py-2 px-4">
+                            <Link href={`/tasks/${task._id}`} className="text-blue-500 hover:underline">
+                              View Task
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                      {tasksToDisplay?.length === 0 && (
+                        <tr>
+                          <td colSpan="5" className="text-center py-2">
+                            No tasks found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className='flex justify-center mt-6'>
+                {userInfo?.role !== 'user' && (
+                  <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md"
+                    onClick={() => router.push(`/projects/edit/${id}`)}
+                  >
+                    Edit Project
+                  </button>
+                )}
+                {userInfo?.role === 'admin' && (
+                  <button
+                    className="bg-red-600 text-white px-4 py-2 rounded-md ml-4"
+                    onClick={handleDelete}
+                  >
+                    Delete Project
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </>
   );
