@@ -26,7 +26,7 @@ const userSchema = new Schema({
     role: {
         type: String,
         Enum: ['user', 'admin', 'manager'],
-        default: false,
+        default: 'user',
     },
     lastEmailSent: {
         type: Date,
