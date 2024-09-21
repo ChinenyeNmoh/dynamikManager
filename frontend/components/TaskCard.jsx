@@ -11,11 +11,11 @@ const TaskCard = ({ task = '', project = '', team = '' }) => {
   // Function to handle viewing task details
   const viewDetails = () => {
     if(task) {
-    router.push(`/tasks/${task._id}`);
+    router.push(`/tasks/${task?._id}`);
     } else if(team) {
-    router.push(`/teams/${team._id}`);
+    router.push(`/teams/${team?._id}`);
     } else {
-    router.push(`/projects/${project._id}`);
+    router.push(`/projects/${project?._id}`);
   };
   }
 
@@ -26,22 +26,22 @@ const TaskCard = ({ task = '', project = '', team = '' }) => {
         {(task || project) && (
           <>
             <div className="mb-1">
-              <p className="font-bold text-sm text-gray-700">{task.title || project.name}</p>
-              <p className="text-green-600 mt-1">{task.project?.name || project.name}</p>
+              <p className="font-bold text-sm text-gray-700">{task?.title || project?.name}</p>
+              <p className="text-green-600 mt-1">{task?.project?.name || project?.name}</p>
             </div>
 
             <div className="mb-1 flex items-center space-x-2">
-              <Priority priority={task.priority || project.priority} />
-              <p className="text-sm text-gray-600">{task.priority || project.priority} priority</p>
+              <Priority priority={task?.priority || project?.priority} />
+              <p className="text-sm text-gray-600">{task?.priority || project?.priority} priority</p>
             </div>
 
             <div className="mt-1">
-              <p className="text-sm text-orange-600 font-semibold">Status: {task.status || project.status}</p>
+              <p className="text-sm text-orange-600 font-semibold">Status: {task?.status || project?.status}</p>
               <p className={`text-sm font-semibold ${isDueSoon ? 'text-red-600' : 'text-green-600'}`}>
-                Due Date: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not Set'}
+                Due Date: {task?.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not Set'}
               </p>
               <p className="text-gray-600 text-sm">
-                Assigned to: <span className="font-semibold">{task.assignedTo?.name || project?.team?.name || 'Unassigned'}</span>
+                Assigned to: <span className="font-semibold">{task?.assignedTo?.name || project?.team?.name || 'Unassigned'}</span>
               </p>
             </div>
 
@@ -60,14 +60,14 @@ const TaskCard = ({ task = '', project = '', team = '' }) => {
         {/* Render Team information if available */}
         {team && (
           <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-            <p className="font-bold text-lg text-gray-800 mb-2">{team.name}</p>
+            <p className="font-bold text-lg text-gray-800 mb-2">{team?.name}</p>
 
             <div className="mb-4">
               <p className="text-green-600 font-semibold mb-1">Team Projects:</p>
               <ul className="pl-4 list-disc list-inside">
-                {team.projects.map((project) => (
-                  <li key={project._id} className="text-gray-700 text-sm hover:text-green-500">
-                    {project.name}
+                {team?.projects?.map((project) => (
+                  <li key={project?._id} className="text-gray-700 text-sm hover:text-green-500">
+                    {project?.name}
                   </li>
                 ))}
               </ul>
@@ -76,9 +76,9 @@ const TaskCard = ({ task = '', project = '', team = '' }) => {
             <div>
               <p className="text-green-600 font-semibold mb-1">Team Members:</p>
               <ul className="pl-4 list-disc list-inside">
-                {team.members.map((member) => (
-                  <li key={member._id} className="text-gray-700 text-sm hover:text-green-500">
-                    {member.name}
+                {team?.members.map((member) => (
+                  <li key={member?._id} className="text-gray-700 text-sm hover:text-green-500">
+                    {member?.name}
                   </li>
                 ))}
               </ul>

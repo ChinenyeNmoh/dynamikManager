@@ -47,7 +47,7 @@ const Page = () => {
                 const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/projects/', {
                     withCredentials: true,
                 });
-                setProjectsData(data.projects);
+                setProjectsData(data?.projects);
                 setLoading(false);
             } catch (error) {
                 console.log('error', error.message);
@@ -61,9 +61,9 @@ const Page = () => {
     // Filter projects based on keyword
     useEffect(() => {
         if (keyword.trim()) {
-            const filtered = projectsData.filter((project) =>
-                project.name.toLowerCase().includes(keyword.toLowerCase()) || 
-                project.description.toLowerCase().includes(keyword.toLowerCase())
+            const filtered = projectsData?.filter((project) =>
+                project?.name.toLowerCase().includes(keyword.toLowerCase()) || 
+                project?.description.toLowerCase().includes(keyword.toLowerCase())
             );
             setFilteredprojects(filtered);
         } else {
@@ -75,7 +75,7 @@ const Page = () => {
     useEffect(() => {
         let sorted = filteredprojects;
         if (status.trim()) {
-            sorted = sorted.filter((project) => project.status === status);
+            sorted = sorted.filter((project) => project?.status === status);
         }
         if (team.trim()) {
             sorted = sorted.filter((project) => project?.team?._id === team);

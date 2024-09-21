@@ -32,8 +32,8 @@ const Page = () => {
                     params: { page, limit },
                     withCredentials: true,
                 });
-                setTasksData(data.tasks);
-                setFilteredTasks(data.tasks);
+                setTasksData(data?.tasks);
+                setFilteredTasks(data?.tasks);
                 setLoading(false);
             } catch (error) {
                 console.log('error', error.message);
@@ -51,7 +51,7 @@ const Page = () => {
                 const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/teams/', {
                     withCredentials: true,
                 });
-                setTeamsData(data.teams);
+                setTeamsData(data?.teams);
                 setLoading(false);
             } catch (error) {
                 console.log('error', error.message);
@@ -69,7 +69,7 @@ const Page = () => {
                 const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/projects/', {
                     withCredentials: true,
                 });
-                setProjectsData(data.projects);
+                setProjectsData(data?.projects);
                 setLoading(false);
             } catch (error) {
                 console.log('error', error.message);
@@ -143,9 +143,9 @@ const Page = () => {
                     </div>
 
                      {/* Pagination Component */}
-          {Math.ceil(sortedTasks.length / limit) > 1 && (
+          {Math.ceil(sortedTasks?.length / limit) > 1 && (
             <Pagination
-              totalItems={sortedTasks.length}
+              totalItems={sortedTasks?.length}
               itemsPerPage={limit}
               currentPage={page}
               onPageChange={handlePageChange}

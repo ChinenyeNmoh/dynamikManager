@@ -116,7 +116,7 @@ const Page = () => {
                 >
                   <option value="">Select Project</option>
                   {projects.map((proj) => (
-                    <option key={proj._id} value={proj._id}>
+                    <option key={proj?._id} value={proj?._id}>
                       {proj.name}
                     </option>
                   ))}
@@ -192,8 +192,8 @@ const Page = () => {
                   >
                     <option value="">Select user</option>
                     {users.map((user) => (
-                      <option key={user._id} value={user._id}>
-                        {user.name}
+                      <option key={user?._id} value={user?._id}>
+                        {user?.name}
                       </option>
                     ))}
                   </select>
