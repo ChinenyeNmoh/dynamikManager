@@ -110,7 +110,7 @@ const Page = () => {
     }
   };
 
-  const tasksToDisplay = tasksData?.filter((task) => task?.project._id === id);
+  const tasksToDisplay = tasksData?.filter((task) => task?.project?._id === id);
   
 
   return (
