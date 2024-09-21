@@ -105,7 +105,7 @@ const Page = () => {
           <Header />
           {loading && <LoadingPage />}
           <div className="flex justify-center items-center mt-10">
-            <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6">
+          <div className="w-full max-w-4xl bg-white p-6 lg:p-8 rounded-lg shadow-lg space-y-6">
               
               {/* User Info Section */}
               <h1 className="text-lg sm:text-2xl font-bold text-gray-700 text-center">User Info</h1>
@@ -143,13 +143,14 @@ const Page = () => {
               <div className="mt-6">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-700 text-center mb-4">Assigned Tasks</h2>
                 {assignedTasks.length > 0 ? (
-                  <table className="w-full table-auto text-left text-sm sm:text-md">
-                    <thead>
-                      <tr>
+                  <table className="min-w-full table-auto text-left text-sm sm:text-md">
+                  <thead>
+                    <tr className="text-left bg-gray-200">
                         <th className="px-4 py-2">Title</th>
                         <th className="px-4 py-2">Priority</th>
                         <th className="px-4 py-2">Status</th>
                         <th className="px-4 py-2">Due Date</th>
+                        <th className="py-2 px-4">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -159,6 +160,11 @@ const Page = () => {
                           <td className="px-4 py-2">{task.priority}</td>
                           <td className="px-4 py-2">{task.status}</td>
                           <td className="px-4 py-2">{new Date(task.dueDate).toLocaleDateString()}</td>
+                          <td className="py-2 px-4">
+                            <Link href={`/tasks/${task._id}`} className="text-blue-500 hover:underline">
+                              View Task
+                            </Link>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
