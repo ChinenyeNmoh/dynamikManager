@@ -194,11 +194,12 @@ const Page = () => {
                     required
                   >
                     <option value="">Select user</option>
-                    {project?.team?.members.map((member) => (
-                      <option key={member?._id} value={member?._id}>
-                        {member?.name}
-                      </option>
-                    ))}
+                        {projects
+        .find((p) => p._id === project)?.team?.members.map((member) => (
+          <option key={member?._id} value={member?._id}>
+            {member?.name}
+          </option>
+        ))}
                   </select>
                 </div>
               </div>
