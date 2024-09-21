@@ -56,11 +56,11 @@ const Page = () => {
   // Populate form with project data
   useEffect(() => {
     if (project) {
-      setName(project.name);
-      setDescription(project.description);
-      setPriority(project.priority);
-      setStatus(project.status);
-      setSelectedTeam(project.team._id); 
+      setName(project?.name);
+      setDescription(project?.description);
+      setPriority(project?.priority);
+      setStatus(project?.status);
+      setSelectedTeam(project?.team._id); 
     }
   }, [project]);
 
@@ -146,8 +146,8 @@ const Page = () => {
             >
               <option value="">{project?.team?.name}</option>
               {teams.map((team) => (
-                <option key={team._id} value={team._id}>
-                  {team.name}
+                <option key={team?._id} value={team?._id}>
+                  {team?.name}
                 </option>
               ))}
             </select>
