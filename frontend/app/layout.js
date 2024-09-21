@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import "@/assets/styles/globals.css";
 
 const MainLayout = ({ children }) => {
-  const websocketRef = useRef(null); // Using ref to persist WebSocket connection across renders
-  const reconnectInterval = useRef(null); // For reconnect attempts
+  const websocketRef = useRef(null); 
+  const reconnectInterval = useRef(null); 
 
   useEffect(() => {
     const createWebSocket = () => {
@@ -21,7 +21,7 @@ const MainLayout = ({ children }) => {
         try {
           const message = JSON.parse(event.data);
           if (message.type === 'task-update' || message.type === 'task-creation') {
-            await handleWebSocketMessage(message); // Async handling of the message
+            toast.success(message.message);
             
           }
         } catch (error) {
@@ -44,15 +44,10 @@ const MainLayout = ({ children }) => {
         reconnectInterval.current = setInterval(() => {
           console.log('Attempting to reconnect...');
           createWebSocket();
-        }, 5000); // Retry every 5 seconds
+        }, 5000); // Attempt to reconnect every 5 seconds
       }
     };
 
-    const handleWebSocketMessage = async (message) => {
-      if (message.message) {
-        toast.info(message.message);
-      }
-    };
 
     // Create WebSocket connection
     createWebSocket();
