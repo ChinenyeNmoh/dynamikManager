@@ -23,7 +23,13 @@ const createProject =  async (req, res) => {
 // READ all projects
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find({}).populate('team').sort({ createdAt: -1 });
+    const projects = await Project.find({}).populate({
+      path: 'team',
+      populate: {
+        path: 'members',
+      }
+    }).sort({ createdAt: -1 });
+    
     if (!projects || projects.length === 0) {
         return res.status(404).json({ message: 'No projects found' });
     }

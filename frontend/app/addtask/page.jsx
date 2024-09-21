@@ -191,9 +191,9 @@ const Page = () => {
                     required
                   >
                     <option value="">Select user</option>
-                    {users.map((user) => (
-                      <option key={user?._id} value={user?._id}>
-                        {user?.name}
+                    {project?.team?.members.map((member) => (
+                      <option key={member?._id} value={member?._id}>
+                        {member?.name}
                       </option>
                     ))}
                   </select>
