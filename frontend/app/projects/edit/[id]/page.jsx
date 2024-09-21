@@ -30,7 +30,7 @@ const Page = () => {
         const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, {
           withCredentials: true,
         });
-        setProject(response.data.project);
+        setProject(response?.data?.project);
       } catch (error) {
         console.error(error);
         toast.error('Failed to fetch project');
@@ -41,7 +41,6 @@ const Page = () => {
     fetchProject();
   }, [id]);
 
-  console.log(project);
 
   // Fetch userInfo from localStorage only on the client-side
   useEffect(() => {
@@ -72,7 +71,7 @@ const Page = () => {
         const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/teams', {
           withCredentials: true,
         });
-        setTeams(response.data.teams);
+        setTeams(response?.data?.teams);
       } catch (error) {
         console.error(error);
         toast.error('Failed to fetch teams');
@@ -95,7 +94,7 @@ const Page = () => {
       }, {
         withCredentials: true,
       });
-      console.log(data);
+    
       toast.success('Project updated successfully!');
       router.push(`/projects/${id}`);
     } catch (error) {
@@ -145,7 +144,7 @@ const Page = () => {
              
             >
               <option value="">{project?.team?.name}</option>
-              {teams.map((team) => (
+              {teams?.map((team) => (
                 <option key={team?._id} value={team?._id}>
                   {team?.name}
                 </option>

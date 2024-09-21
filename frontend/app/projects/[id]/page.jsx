@@ -114,8 +114,8 @@ const Page = () => {
 
   return (
     <>
-      <div className='flex flex-col lg:flex-row w-full h-auto p-3'>
-        <div className='w-full lg:w-1/4'>
+      <div className='flex w-auto lg:w-full h-auto p-3'>
+        <div className=''>
           <SlideBar />
         </div>
         <main className="w-full lg:w-3/4 h-full mb-10 m-2">
