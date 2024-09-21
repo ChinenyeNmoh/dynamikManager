@@ -65,7 +65,7 @@ const Page = () => {
     };
     fetchTasks();
   }, []);
-  console.log('tasksData', tasksData);
+
 
   // Fetch projects
   useEffect(() => {
@@ -110,8 +110,8 @@ const Page = () => {
     }
   };
 
-  const tasksToDisplay = tasksData?.filter((task) => task?.project === id);
-  console.log('tasksToDisplay', tasksToDisplay);
+  const tasksToDisplay = tasksData?.filter((task) => task?.project._id === id);
+  
 
   return (
     <>
