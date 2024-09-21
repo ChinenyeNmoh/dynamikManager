@@ -24,7 +24,10 @@ const createTask = async (req, res) => {
     };
 
     // Create the task
-    const savedTask = await Task.create(newTask);
+    let savedTask = await Task.create(newTask);
+
+    // Populate the project field with the project details
+    savedTask = await savedTask.populate('project');
 
     if (req.body.assignedTo.toString() === req.user._id.toString()) {
       return res.status(400).json({ message: 'You cannot send a message to yourself' });
@@ -61,7 +64,7 @@ const createTask = async (req, res) => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify({
           type: 'task-creation',
-          message: `New task created: ${savedTask.title}`,
+          message: `${req.user.name} created a new task: "${savedTask.title}" in the project "${savedTask.project.name}".`,
         }));
       }
     });
@@ -103,8 +106,8 @@ const getTaskById = async (req, res) => {
 // UPDATE a task by ID
 const updateTaskById = async (req, res) => {
   try {
-    console.log(req.body);
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('project')
     if (!updatedTask) return res.status(404).json({ message: 'Task not found' });
 
     // Notify all connected clients about the updated task
@@ -112,7 +115,7 @@ const updateTaskById = async (req, res) => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify({
           type: 'task-update',
-          message: `Task updated: ${updatedTask.title}`,
+          message: `${req.user.name} updated task: "${updatedTask.title}" in the project "${updatedTask.projectName}".`,
         }));
       }
     });

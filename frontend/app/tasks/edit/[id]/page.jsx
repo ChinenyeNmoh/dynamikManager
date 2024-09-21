@@ -195,11 +195,12 @@ const Page = () => {
               disabled={userInfo?.role === 'user'}
             >
               <option value="">Select User</option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name}
-                </option>
-              ))}
+              {projects
+        .find((p) => p._id === project)?.team?.members.map((member) => (
+          <option key={member?._id} value={member?._id}>
+            {member?.name}
+          </option>
+        ))}
             </select>
           </div>
             <div>
