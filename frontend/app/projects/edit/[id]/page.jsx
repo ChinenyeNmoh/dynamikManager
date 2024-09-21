@@ -59,7 +59,7 @@ const Page = () => {
       setDescription(project?.description);
       setPriority(project?.priority);
       setStatus(project?.status);
-      setSelectedTeam(project?.team._id); 
+      setSelectedTeam(project?.team?._id); 
     }
   }, [project]);
 
