@@ -99,10 +99,10 @@ const Page = () => {
             sorted = sorted.filter((task) => task?.status === status);
         }
         if (team.trim()) {
-            sorted = sorted.filter((task) => task?.project.team === team);
+            sorted = sorted.filter((task) => task?.project?.team === team);
         }
         if (project.trim()) {
-            sorted = sorted.filter((task) => task?.project._id === project);
+            sorted = sorted.filter((task) => task?.project?._id === project);
         }
         setSortedTasks(sorted);
     }, [status, team, project, filteredTasks]);
