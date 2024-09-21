@@ -35,18 +35,17 @@ const TaskSort = ({ projects = [], teams = [] , tasks = [], projectStatus=[] }) 
   }, []);
  
   //Get unique task status
-const uniqueStatuses = [...new Set(tasks.map((task) => task.status))];
-console.log('uniqueStatuses', uniqueStatuses);
-//Get unique project status
-const uniqueProjectsStatus = [...new Set(projectStatus.map((stat) => stat.status))];
-console.log('uniqueProjectsStatus', uniqueProjectsStatus);
+const uniqueStatuses = [...new Set(tasks.map((task) => task?.status))];
+
+const uniqueProjectsStatus = [...new Set(projectStatus.map((stat) => stat?.status))];
+
 
 
   return (
     <div className="mb-6 p-4 border border-solid border-black rounded-lg shadow-md">
       <div className="flex flex-wrap lg:flex-nowrap items-center gap-4 mb-4">
         {/* Sort by Status */}
-        {projectStatus.length > 0 && (
+        {projectStatus?.length > 0 && (
           <div className="px-2 w-full lg:w-auto">
           <label htmlFor="status" className="block text-gray-700 font-semibold text-sm">Status</label>
           <select
@@ -56,11 +55,11 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
             className="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 bg-inherit border-blue-500 border-solid border-2 p-3 text-sm"
           >
             <option value="">All Status</option>
-{uniqueStatuses.length > 0 ? 
-  uniqueStatuses.map((status, index) => (
+{uniqueStatuses?.length > 0 ? 
+  uniqueStatuses?.map((status, index) => (
     <option key={index} value={status}>{status}</option>
   )) :
-  (uniqueProjectsStatus.map((status, index) => (
+  (uniqueProjectsStatus?.map((status, index) => (
     <option key={index} value={status}>{status}</option>
   ))) 
 }
@@ -73,7 +72,7 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
         
 
         {/* Sort by Project */}
-        {projects.length > 0 && (
+        {projects?.length > 0 && (
           <div className="px-2 w-full lg:w-auto">
           <label htmlFor="project" className="block text-gray-700 font-semibold text-sm">Project</label>
           <select
@@ -83,7 +82,7 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
             className="mt-1 block w-full p-3 rounded-md shadow-sm focus:ring focus:ring-opacity-50 bg-inherit border-blue-500 border-solid border-2 text-sm"
           >
             <option value="">All Projects</option>
-            {projects.map((project) => (
+            {projects?.map((project) => (
               <option key={project?._id} value={project?._id}>{project?.name}</option>
             ))}
           </select>
@@ -102,7 +101,7 @@ console.log('uniqueProjectsStatus', uniqueProjectsStatus);
             className="mt-1 block w-full p-3 rounded-md shadow-sm focus:ring focus:ring-opacity-50 bg-inherit border-blue-500 border-solid border-2 text-sm"
           >
             <option value="">All Teams</option>
-            {teams.map((team) => (
+            {teams?.map((team) => (
               <option key={team?._id} value={team?._id}>{team?.name}</option>
             ))}
           </select>

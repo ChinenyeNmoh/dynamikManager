@@ -15,7 +15,7 @@ const MessageCard = ({ message }) => {
         withCredentials: true,
       });
       // Handle the response as needed
-      console.log(response.data);
+      console.log(response?.data);
       toast.success('Message marked as read');
       router.refresh()
     } catch (error) {
@@ -60,7 +60,7 @@ const MessageCard = ({ message }) => {
        
         <li className='text-green-600 mb-2'>
           <strong>Staus:</strong>{' '}
-          {message?.task.status}
+          {message?.task?.status}
         </li>
         <li >
         <div className="mb-1 flex items-center space-x-2">

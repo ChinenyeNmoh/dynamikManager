@@ -61,9 +61,9 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
               className="w-full border p-2 rounded-lg text-gray-700 text-lg"
             >
               <option value="">{task?.project?.name}</option>
-              {projects.map((proj) => (
-                <option key={proj._id} value={proj._id}>
-                  {proj.name}
+              {projects?.map((proj) => (
+                <option key={proj?._id} value={proj?._id}>
+                  {proj?.name}
                 </option>
               ))}
             </select>
@@ -73,7 +73,7 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
             <label className="block text-lg font-bold text-gray-800">Description</label>
             <textarea
               name="description"
-              value={editableTask.description || ''}
+              value={editableTask?.description || ''}
               onChange={handleInputChange}
               disabled={!canEditAllFields}
               className="w-full border p-2 rounded-lg text-gray-700 text-lg"
@@ -86,7 +86,7 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
               <label className="block text-lg font-bold text-gray-800">Priority</label>
               <select
                 name="priority"
-                value={editableTask.priority || ''}
+                value={editableTask?.priority || ''}
                 onChange={handleInputChange}
                 disabled={!canEditAllFields}
                 className="w-full border p-2 rounded-lg text-gray-700 text-lg"
@@ -101,7 +101,7 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
               <label className="block text-lg font-bold text-gray-800">Status</label>
               <select
                 name="status"
-                value={editableTask.status || ''}
+                value={editableTask?.status || ''}
                 onChange={handleInputChange}
                 disabled={!canEditAllFields && !canEditStatusOnly}
                 className="w-full border p-2 rounded-lg text-gray-700 text-lg"
@@ -119,7 +119,7 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
             <input
               type="date"
               name="dueDate"
-              value={editableTask.dueDate ? new Date(editableTask.dueDate).toISOString().split('T')[0] : ''}
+              value={editableTask?.dueDate ? new Date(editableTask?.dueDate).toISOString().split('T')[0] : ''}
               onChange={handleInputChange}
               disabled={!canEditAllFields}
               className="w-full border p-2 rounded-lg text-gray-700 text-lg"
@@ -131,15 +131,15 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
             <label className="block text-lg font-bold text-gray-800">Assigned To</label>
             <select
               name="assignedTo"
-              value={editableTask.assignedTo || ''}
+              value={editableTask?.assignedTo || ''}
               onChange={handleInputChange}
               disabled={!canEditAllFields}
               className="w-full border p-2 rounded-lg text-gray-700 text-lg"
             >
               <option value="">{task?.assignedTo?.name}</option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name}
+              {users?.map((user) => (
+                <option key={user?._id} value={user?._id}>
+                  {user?.name}
                 </option>
               ))}
             </select>
