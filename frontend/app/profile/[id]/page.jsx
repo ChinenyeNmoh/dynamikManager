@@ -138,17 +138,19 @@ const Page = () => {
 
               <hr />
 
-              {/* Assigned Tasks Table */}
-              <div className="mt-6">
+               {/* Assigned Tasks Table */}
+               <div className="mt-6">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-700 text-center mb-4">Assigned Tasks</h2>
                 {assignedTasks.length > 0 ? (
-                  <table className="w-full table-auto text-left text-sm sm:text-md">
-                    <thead>
-                      <tr>
+                  <div className="overflow-x-auto">
+                  <table className="min-w-full table-auto text-left text-sm sm:text-md">
+                  <thead>
+                    <tr className="text-left bg-gray-200">
                         <th className="px-4 py-2">Title</th>
                         <th className="px-4 py-2">Priority</th>
                         <th className="px-4 py-2">Status</th>
                         <th className="px-4 py-2">Due Date</th>
+                        <th className="py-2 px-4">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -158,10 +160,16 @@ const Page = () => {
                           <td className="px-4 py-2">{task.priority}</td>
                           <td className="px-4 py-2">{task.status}</td>
                           <td className="px-4 py-2">{new Date(task.dueDate).toLocaleDateString()}</td>
+                          <td className="py-2 px-4">
+                            <Link href={`/tasks/${task._id}`} className="text-blue-500 hover:underline">
+                              View Task
+                            </Link>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 ) : (
                   <p className="text-center text-gray-500">No tasks assigned to this user.</p>
                 )}
