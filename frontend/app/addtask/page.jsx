@@ -57,6 +57,7 @@ const Page = () => {
   }, []);
 
   console.log(users, projects);
+  console.log('setProject', project);
 
  
 
