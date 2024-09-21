@@ -118,7 +118,7 @@ const Page = () => {
         <div className=''>
           <SlideBar />
         </div>
-        <main className="w-full lg:w-3/4 h-full mb-10 m-2">
+        <main className="w-full h-full mb-10 m-2">
           <Header />
 
           {loading && <LoadingPage />}

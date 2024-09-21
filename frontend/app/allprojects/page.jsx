@@ -15,7 +15,7 @@ const Page = () => {
     const [teamsData, setTeamsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
-    const limit = 2;
+    const limit = 8;
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || '';
     const team = searchParams.get('team') || '';
