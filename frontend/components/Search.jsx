@@ -40,7 +40,7 @@ const Search = () => {
       }
     }
   };
-  console.log('searchTerm', searchTerm);
+
 
   // Handle clear input
   const handleClear = () => {

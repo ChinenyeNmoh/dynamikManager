@@ -54,7 +54,6 @@ const Page = () => {
         try {
             setLoading(true);
             const { data } = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/tasks`, {
-                params: { page, limit },
                 withCredentials: true,
             });
             setTasksData(data?.tasks);
@@ -66,6 +65,7 @@ const Page = () => {
     };
     fetchTasks();
   }, []);
+  console.log('tasksData', tasksData);
 
   // Fetch projects
   useEffect(() => {
@@ -111,6 +111,7 @@ const Page = () => {
   };
 
   const tasksToDisplay = tasksData?.filter((task) => task?.project === id);
+  console.log('tasksToDisplay', tasksToDisplay);
 
   return (
     <>

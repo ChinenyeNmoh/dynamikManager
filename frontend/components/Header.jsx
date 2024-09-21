@@ -20,7 +20,7 @@ function Header() {
     fetchNotifications();
   }, []);
 
-  console.log(notificationCount);
+  
   
   return (
     <div className='flex flex-col sm:flex-row items-center justify-end lg:justify-between w-full h-auto sm:h-16 bg-gray-900 rounded-md px-4 py-4 sm:py-0'>
