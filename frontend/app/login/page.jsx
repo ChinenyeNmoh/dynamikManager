@@ -59,9 +59,10 @@ const Login = () => {
           >
             <FaArrowLeft className='mr-2 ml-2 my-3 text-white' /> Home
           </Link>
-          {loading && <LoadingPage />}
+          
         <div className="w-full max-w-md mx-auto bg-gray-900 text-white shadow-md shadow-transparent rounded-lg border mt-14">
           <h1 className="text-center mt-3 font-bold text-3xl mb-5">Sign In</h1>
+          {loading && <LoadingPage />}
           <div>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">

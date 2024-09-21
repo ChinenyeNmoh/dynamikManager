@@ -57,7 +57,7 @@ const Register = () => {
 
   return (
     <>
-      {loading && <LoadingPage />}
+    
       <div className="container mx-auto h-full">
       <Link
             href='/'
@@ -67,6 +67,7 @@ const Register = () => {
         </Link>
         <div className="w-full max-w-xl mx-auto bg-gray-900 text-white rounded-lg border my-8">
           <h1 className="text-center mt-10 font-bold text-3xl mb-5">Sign Up</h1>
+          {loading && <LoadingPage />}
           <form onSubmit={handleSubmit}>
             {/* Full Name Field */}
            
