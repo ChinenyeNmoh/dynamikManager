@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import Header from '@/components/Header';
 import { GiRank2 } from "react-icons/gi";
 import SlideBar from '@/components/SlideBar';
+import Link from 'next/link';
+
 
 const Page = () => {
   const [loading, setLoading] = useState(true);
