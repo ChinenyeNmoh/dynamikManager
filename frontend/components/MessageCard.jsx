@@ -19,7 +19,7 @@ const MessageCard = ({ message }) => {
       toast.success('Message marked as read');
       router.refresh()
     } catch (error) {
-      console.error("Error marking message as read:", error.message);
+      console.error("Error marking message as read:", error?.message);
       toast.error(error.response?.data?.message || "Error marking message as read");
     }
   };
@@ -37,7 +37,7 @@ const MessageCard = ({ message }) => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/messages/${message._id}`, { withCredentials: true });
+        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/messages/${message?._id}`, { withCredentials: true });
         toast.success("message deleted");
         router.refresh();
       } catch (error) {
@@ -51,32 +51,32 @@ const MessageCard = ({ message }) => {
     <div className='relative bg-white p-4 rounded-md shadow-md border border-gray-200'>
 
       <p className='text-xl mb-2 text-gray-700'>
-        <span className='font-bold'>Task:</span> {message.task.title}
+        <span className='font-bold'>Task:</span> {message?.task?.title}
       </p>
-      <p className='text-gray-700'><strong>Content: {' '}</strong>  {message.body}</p>
+      <p className='text-gray-700'><strong>Content: {' '}</strong>  {message?.body}</p>
       <hr className='my-4' />
 
       <ul className='mt-4'>
        
         <li className='text-green-600 mb-2'>
           <strong>Staus:</strong>{' '}
-          {message.task.status}
+          {message?.task.status}
         </li>
         <li >
         <div className="mb-1 flex items-center space-x-2">
-              <Priority priority={message.task.priority } />
-              <p className=" text-gray-600">{message.task.priority } priority</p>
+              <Priority priority={message?.task?.priority } />
+              <p className=" text-gray-600">{message?.task?.priority } priority</p>
             </div>
         </li>
         <hr className='my-4' />
         <li className='text-sm text-gray-700'>
           <strong >Received:</strong>{' '}
-          {new Date(message.createdAt).toLocaleString()}
+          {new Date(message?.createdAt).toLocaleString()}
         </li>
         <li className='text-sm text-gray-700'>
            <strong>Reply Email: {' '}</strong> 
           <a href={`mailto:${message?.sender?.email}`} className='text-blue-500'>
-            {message.email}
+            {message?.email}
           </a>
         </li>
       </ul>
@@ -84,9 +84,9 @@ const MessageCard = ({ message }) => {
         <button
         onClick={handleReadClick}
         className={`mt-4 mr-3 bg-blue-500 text-white py-1 px-3 rounded-md disabled:opacity-50`}
-        disabled={message.read}
+        disabled={message?.read}
       >
-        {message.read ? 'Read' : 'Mark as Read'}
+        {message?.read ? 'Read' : 'Mark as Read'}
       </button>
 
        <button

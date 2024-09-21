@@ -48,7 +48,7 @@ const Page = () => {
                 const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/projects/', {
                     withCredentials: true,
                 });
-                setProjectsData(data.projects);
+                setProjectsData(data?.projects);
                 setLoading(false);
             } catch (error) {
                 console.log('error', error.message);
@@ -78,7 +78,7 @@ const Page = () => {
         if (project.trim()) {
             sorted = sorted?.projects?.filter((team) => team?._id === project);
         }else if(team.trim()){
-            sorted = sorted.filter((t) => t._id === team);
+            sorted = sorted.filter((t) => t?._id === team);
         }
         setSortedteams(sorted);
     }, [project, filteredteams, team]);

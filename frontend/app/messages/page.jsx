@@ -30,7 +30,7 @@ const Page = () => {
         const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/messages/user', {
           withCredentials: true,
         });
-        setMessages(response.data.messages);
+        setMessages(response?.data?.messages);
       } catch (error) {
         console.error("Error fetching messages:", error);
         toast.error(error.response?.data?.message || "Error fetching messages");

@@ -83,8 +83,8 @@ const Page = () => {
     useEffect(() => {
         if (keyword.trim()) {
             const filtered = tasksData.filter((task) =>
-                task.title.toLowerCase().includes(keyword.toLowerCase()) || 
-                task.description.toLowerCase().includes(keyword.toLowerCase())
+                task?.title.toLowerCase().includes(keyword.toLowerCase()) || 
+                task?.description.toLowerCase().includes(keyword.toLowerCase())
             );
             setFilteredTasks(filtered);
         } else {
@@ -96,13 +96,13 @@ const Page = () => {
     useEffect(() => {
         let sorted = filteredTasks;
         if (status.trim()) {
-            sorted = sorted.filter((task) => task.status === status);
+            sorted = sorted.filter((task) => task?.status === status);
         }
         if (team.trim()) {
-            sorted = sorted.filter((task) => task.project.team === team);
+            sorted = sorted.filter((task) => task?.project.team === team);
         }
         if (project.trim()) {
-            sorted = sorted.filter((task) => task.project._id === project);
+            sorted = sorted.filter((task) => task?.project._id === project);
         }
         setSortedTasks(sorted);
     }, [status, team, project, filteredTasks]);
@@ -133,11 +133,11 @@ const Page = () => {
                 <div className='mt-10'>
                     <h1 className='text-2xl font-semibold mb-4 text-center'>All Tasks</h1>
                     {loading && <LoadingPage />}
-                    {currentDisplay.length === 0 && !loading && (
+                    {currentDisplay?.length === 0 && !loading && (
                         <p className='text-center text-lg font-semibold'>No tasks found</p>
                     )}
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
-                        {currentDisplay.map((task, index) => (
+                        {currentDisplay?.map((task, index) => (
                             <TaskCard key={index} task={task} />
                         ))}
                     </div>

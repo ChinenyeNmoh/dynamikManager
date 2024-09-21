@@ -26,7 +26,7 @@ const Page = () => {
         const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/users`, {
           withCredentials: true,
         });
-        setUsers(response.data.users);
+        setUsers(response?.data?.users);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -44,7 +44,7 @@ const Page = () => {
         const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/projects`, {
           withCredentials: true,
         });
-        setProjects(response.data.projects);
+        setProjects(response?.data?.projects);
         setLoading(false);
       } catch (error) {
         console.error(error);
