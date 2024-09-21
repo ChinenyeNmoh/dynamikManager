@@ -86,7 +86,12 @@ npm run dev --prefix ./backend
 
 ```
 
-To learn more about deployment, [see this](https://vitejs.dev/guide/static-deploy.html)
+## Deployment
+
+Frontend: The frontend is built with Next.js and deployed on Vercel for fast and reliable hosting, leveraging Vercel's optimized serverless infrastructure.
+(https://dynamik-manager.vercel.app/)
+
+Backend: The backend API and WebSocket server are hosted on DigitalOcean, ensuring scalability and security for handling real-time updates and API requests.
 
 ### Contributing
 
