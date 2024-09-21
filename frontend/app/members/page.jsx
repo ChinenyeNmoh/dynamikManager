@@ -67,7 +67,7 @@ const Page = () => {
               <div className="mt-6">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-700 text-center mb-4">User List</h2>
                 <div className="overflow-x-auto">
-                  {users.length > 0 ? (
+                  {users?.length > 0 ? (
                     <table className="min-w-full table-auto text-left text-sm sm:text-md">
                       <thead>
                         <tr>
@@ -78,7 +78,7 @@ const Page = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentDisplay.map(user => (
+                        {currentDisplay?.map(user => (
                           <tr key={user._id} className="border-t">
                             <td className="px-4 py-2">{user.name}</td>
                             <td className="px-4 py-2">{user.email}</td>

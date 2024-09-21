@@ -115,7 +115,7 @@ const Page = () => {
 
   return (
     <>
-      <div className='flex w-full h-auto p-3'>
+      <div className='flex w-auto lg:w-full h-auto p-3'>
         <div>
           <SlideBar />
         </div>
@@ -158,9 +158,9 @@ const Page = () => {
               <hr />
               {/* Display Tasks in a Responsive Table */}
               <div className="mt-4">
-                <h3 className="font-bold text-lg text-gray-700 mb-2">Tasks</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-700 text-center mb-4">Tasks</h3>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full bg-white border rounded-lg">
+                  <table className="min-w-full table-auto text-left text-sm sm:text-md">
                     <thead>
                       <tr className="text-left bg-gray-200">
                         <th className="py-2 px-4">Title</th>
