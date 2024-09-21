@@ -106,7 +106,7 @@ const Page = () => {
           <Header />
           {loading && <LoadingPage />}
           <div className="flex justify-center items-center mt-10">
-            <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg space-y-6">
+          <div className="w-full max-w-4xl bg-white p-6 lg:p-8 rounded-lg shadow-lg space-y-6">
               
               {/* User Info Section */}
               <h1 className="text-lg sm:text-2xl font-bold text-gray-700 text-center">User Info</h1>
