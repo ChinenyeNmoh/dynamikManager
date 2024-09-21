@@ -1,44 +1,70 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "@/assets/styles/globals.css";
 
-
 const MainLayout = ({ children }) => {
-  useEffect(() => {
-    const websocket = new WebSocket('wss://dynamikmanager.dynamikservices.tech/');
-    // Adjust URL to match your server
+  const websocketRef = useRef(null); // Using ref to persist WebSocket connection across renders
+  const reconnectInterval = useRef(null); // For reconnect attempts
 
-    websocket.onopen = () => {
-      console.log('WebSocket connection established');
+  useEffect(() => {
+    const createWebSocket = () => {
+      websocketRef.current = new WebSocket('wss://dynamikmanager.dynamikservices.tech/');
+
+      websocketRef.current.onopen = () => {
+        console.log('WebSocket connection established');
+        clearInterval(reconnectInterval.current); // Clear reconnection attempts once connected
+      };
+
+      websocketRef.current.onmessage = async (event) => {
+        try {
+          const message = JSON.parse(event.data);
+          if (message.type === 'task-update' || message.type === 'task-creation') {
+            await handleWebSocketMessage(message); // Async handling of the message
+            
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+
+      websocketRef.current.onclose = () => {
+        console.log('WebSocket connection closed');
+        handleReconnect(); // Attempt to reconnect
+      };
+
+      websocketRef.current.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
     };
 
-    websocket.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        if (message.type === 'task-update') {
-          toast.info(message.message);
-        }else if (message.type === 'task-creation') {
-          console.log(message.message || message);
-          toast.info(message.message);
-        }
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
+    const handleReconnect = () => {
+      if (!reconnectInterval.current) {
+        reconnectInterval.current = setInterval(() => {
+          console.log('Attempting to reconnect...');
+          createWebSocket();
+        }, 5000); // Retry every 5 seconds
       }
     };
 
-    websocket.onclose = () => {
-      console.log('WebSocket connection closed');
+    const handleWebSocketMessage = async (message) => {
+      if (message.message) {
+        toast.info(message.message);
+      }
     };
 
-    websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+    // Create WebSocket connection
+    createWebSocket();
 
-    // Cleanup WebSocket connection when the component unmounts
+    // Cleanup WebSocket connection and intervals on component unmount
     return () => {
-      websocket.close();
+      if (websocketRef.current) {
+        websocketRef.current.close();
+      }
+      if (reconnectInterval.current) {
+        clearInterval(reconnectInterval.current);
+      }
     };
   }, []);
 
@@ -49,11 +75,10 @@ const MainLayout = ({ children }) => {
       </head>
       <body className="bg-gray-100">
         <main>
-          <ToastContainer 
-          position="top-center" 
-          hideProgressBar={false}
-          enableMultiContainer={true}
-
+          <ToastContainer
+            position="top-center"
+            hideProgressBar={false}
+            enableMultiContainer={true}
           />
           {children}
         </main>
