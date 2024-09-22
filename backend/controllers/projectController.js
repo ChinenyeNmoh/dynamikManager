@@ -1,4 +1,5 @@
 import Project from '../models/projectModel.js';
+import Team from '../models/teamModel.js';
 
 
 // CREATE a new project
@@ -13,6 +14,10 @@ const createProject =  async (req, res) => {
     }
     const newProject = new Project(req.body);
     const savedProject = await newProject.save();
+    const team = await Team.findById(req.body.team);
+    if (!team) return res.status(404).json({ message: 'Team not found' });
+    team.projects.push(savedProject._id);
+    await team.save();
     res.status(201).json({message: 'Project created successfully', project: savedProject});
   } catch (error) {
     console.log(error.message);
