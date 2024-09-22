@@ -20,7 +20,7 @@ const MainLayout = ({ children }) => {
       websocketRef.current.onmessage = async (event) => {
         try {
           const message = JSON.parse(event.data);
-          if (message.type === 'task-update' || message.type === 'task-creation' || type.message === 'welcome') {
+          if (message.type === 'task-update' || message.type === 'task-creation' || message.type === 'welcome') {
             toast.success(message.message);
             
           }
