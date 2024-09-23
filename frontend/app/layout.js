@@ -15,6 +15,7 @@ const MainLayout = ({ children }) => {
       websocketRef.current.onopen = () => {
         console.log('WebSocket connection established');
         clearInterval(reconnectInterval.current); // Clear reconnection attempts once connected
+        reconnectInterval.current = null;
       };
 
       websocketRef.current.onmessage = async (event) => {
