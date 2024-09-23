@@ -28,11 +28,8 @@ const Dashboard = () => {
   }, []);
   
   const todoLength = tasksData.filter(task => task.status === 'to-do').length;
-  console.log('todoLength', todoLength);
   const inProgressLength = tasksData.filter(task => task.status === 'in-progress').length;
-  console.log('inProgressLength', inProgressLength);
-  const completedLength = tasksData.filter(task => task.status === 'done').length;
-  console.log('completedLength', completedLength);
+  const completedLength = tasksData.filter(task => task.status === 'completed').length;
 
   const tasks = [
     { title: 'Total Task', number: tasksData.length, icon: <MdPending /> },
