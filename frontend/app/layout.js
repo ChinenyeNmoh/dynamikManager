@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import "@/assets/styles/globals.css";
 
 const MainLayout = ({ children }) => {
-  const websocketRef = useRef(null); 
-  const reconnectInterval = useRef(null); 
+  const websocketRef = useRef(null);
+  const reconnectInterval = useRef(null);
 
   useEffect(() => {
     const createWebSocket = () => {
@@ -21,9 +21,9 @@ const MainLayout = ({ children }) => {
       websocketRef.current.onmessage = async (event) => {
         try {
           const message = JSON.parse(event.data);
-          if (message.type === 'task-update' || message.type === 'task-creation' || message.type === 'welcome') {
+          if (message.type === 'task-update' || message.type === 'task-creation') {
             toast.success(message.message);
-            
+
           }
         } catch (error) {
           console.error('Error parsing WebSocket message:', error);
