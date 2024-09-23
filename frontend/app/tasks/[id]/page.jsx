@@ -94,7 +94,7 @@ if (result.isConfirmed) {
     try {
         await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/tasks/${id}`, { withCredentials: true });
         
-        toast.success("Task deleted ");
+        
         router.push("/alltasks");
 
     } catch (error) {
