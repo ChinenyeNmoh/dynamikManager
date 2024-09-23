@@ -11,7 +11,7 @@ const MessageCard = ({ message }) => {
 
   const handleReadClick = async () => {
     try {
-      const response = await axios.put(`https://dynamikmanager.dynamikservices.tech/api/messages/read/`, {id: message._id}, {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/messages/read/`, {id: message._id}, {
         withCredentials: true,
       });
       // Handle the response as needed
@@ -37,7 +37,7 @@ const MessageCard = ({ message }) => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/messages/${message?._id}`, { withCredentials: true });
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/messages/${message?._id}`, { withCredentials: true });
         toast.success("message deleted");
         router.refresh();
       } catch (error) {

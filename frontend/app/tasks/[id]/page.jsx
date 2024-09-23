@@ -35,7 +35,7 @@ const Page = () => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/tasks/${id}`,
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`,
             {
                 withCredentials: true,
             }
@@ -61,7 +61,7 @@ const Page = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/users`,
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/users`,
             {
                 withCredentials: true,
             }
@@ -92,7 +92,7 @@ const handleDelete = async () => {
 
 if (result.isConfirmed) {
     try {
-        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/tasks/${id}`, { withCredentials: true });
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`, { withCredentials: true });
         
         toast.success("Task deleted ");
         router.push("/alltasks");

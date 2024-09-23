@@ -30,7 +30,7 @@ const Page = () => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/tasks/${id}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`, {
           withCredentials: true,
         });
         const taskData = response?.data?.task;
@@ -70,8 +70,8 @@ const Page = () => {
       try {
         setLoading(true);
         const [teamsResponse, usersResponse] = await Promise.all([
-          axios.get('https://dynamikmanager.dynamikservices.tech/api/projects', { withCredentials: true }),
-          axios.get('https://dynamikmanager.dynamikservices.tech/api/users/users', { withCredentials: true }),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`, { withCredentials: true }),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/users`, { withCredentials: true }),
         ]);
         setProjects(teamsResponse.data.projects);
         setUsers(usersResponse.data.users);
@@ -88,7 +88,7 @@ const Page = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`https://dynamikmanager.dynamikservices.tech/api/tasks/${id}`, {
+      const { data } = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`, {
         title,
         description,
         priority,

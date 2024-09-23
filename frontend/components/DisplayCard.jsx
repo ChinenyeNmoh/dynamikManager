@@ -30,7 +30,7 @@ const DisplayCard = ({ task = '', projects = [], users = [] }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Submit updated task data
-    console.log('Task updated:', editableTask);
+   
   };
 
   // Check if the user can edit all fields (admin, manager) or only the status (assigned user)

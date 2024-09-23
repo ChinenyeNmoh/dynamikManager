@@ -35,7 +35,7 @@ const Page = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/users/users`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/users`, {
           withCredentials: true,
         });
         setUsers(response.data.users);
@@ -53,7 +53,7 @@ const Page = () => {
     const fetchTasks = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/tasks`, {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
           withCredentials: true,
         });
         setTasksData(data?.tasks);
@@ -72,7 +72,7 @@ const Page = () => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
           withCredentials: true,
         });
         
@@ -100,7 +100,7 @@ const Page = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, { withCredentials: true });
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, { withCredentials: true });
         router.push("/allprojects");
         toast.success("Project deleted");
       } catch (error) {

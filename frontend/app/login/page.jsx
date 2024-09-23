@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const {data} = await axios.post('https://dynamikmanager.dynamikservices.tech/api/users/login',{ email, password },
+      const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`,{ email, password },
         {
           credentials: 'include',
           withCredentials: true,

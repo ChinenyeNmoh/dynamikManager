@@ -24,7 +24,7 @@ const Page = () => {
     }
   }, []);
 
-  const url = `https://dynamikmanager.dynamikservices.tech/api/users/users`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/users/users`;
   useEffect(() => {
     const fetchUsers = async () => {
       try {

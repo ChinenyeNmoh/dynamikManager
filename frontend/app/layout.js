@@ -10,7 +10,7 @@ const MainLayout = ({ children }) => {
 
   useEffect(() => {
     const createWebSocket = () => {
-      websocketRef.current = new WebSocket('wss://dynamikmanager.dynamikservices.tech/');
+      websocketRef.current = new WebSocket('wss://localhost:5000');
 
       websocketRef.current.onopen = () => {
         console.log('WebSocket connection established');

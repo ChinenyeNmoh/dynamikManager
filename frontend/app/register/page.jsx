@@ -36,7 +36,7 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(`https://dynamikmanager.dynamikservices.tech/api/users/register`, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, {
         fullName,
         email,
         password,

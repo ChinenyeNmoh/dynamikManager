@@ -21,7 +21,7 @@ const Homepage = () => {
     if (userInfo) {
       router.push('/dashboard');
     } else {
-      router.push('/register');
+      router.push('/login');
     }
   };
 

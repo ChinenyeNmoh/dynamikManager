@@ -24,7 +24,7 @@ const Page = () => {
     const fetchTeams = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/teams', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/teams`, {
           withCredentials: true,
         });
         setTeams(response.data.teams);
@@ -41,7 +41,7 @@ const Page = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('https://dynamikmanager.dynamikservices.tech/api/projects', {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
         name,
         description,
         priority,

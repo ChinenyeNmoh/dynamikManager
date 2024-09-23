@@ -30,7 +30,7 @@ const Page = () => {
     }
   }, []);
 
-  const url =  `https://dynamikmanager.dynamikservices.tech/api/users/${id}`;
+  const url =  `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`;
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -50,7 +50,7 @@ const Page = () => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get('https://dynamikmanager.dynamikservices.tech/api/tasks/', {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/tasks/`, {
           withCredentials: true,
         });
         setTaskData(data.tasks);
@@ -77,7 +77,7 @@ const Page = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://dynamikmanager.dynamikservices.tech/api/users/${id}`, { withCredentials: true });
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, { withCredentials: true });
         toast.success("User deleted");
         router.push("/members");
       } catch (error) {

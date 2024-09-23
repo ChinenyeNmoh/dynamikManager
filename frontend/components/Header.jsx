@@ -9,7 +9,7 @@ function Header() {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/messages/user',
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/messages/user`,
         {
           withCredentials: true,
         }

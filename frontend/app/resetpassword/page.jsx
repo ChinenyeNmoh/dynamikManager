@@ -30,7 +30,7 @@ const ResetPassword = () => {
       return;
     }
     try {
-      const { data } = await axios.put('https://dynamikmanager.dynamikservices.tech/api/users/updatepassword', {
+      const { data } = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/updatepassword`, {
         confirmPassword,
         id,
         password,

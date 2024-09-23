@@ -27,7 +27,7 @@ const Page = () => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
           withCredentials: true,
         });
         setProject(response?.data?.project);
@@ -68,7 +68,7 @@ const Page = () => {
     const fetchTeams = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://dynamikmanager.dynamikservices.tech/api/teams', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/teams`, {
           withCredentials: true,
         });
         setTeams(response?.data?.teams);
@@ -85,7 +85,7 @@ const Page = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`https://dynamikmanager.dynamikservices.tech/api/projects/${id}`, {
+      const { data } = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
         name,
         description,
         priority,
