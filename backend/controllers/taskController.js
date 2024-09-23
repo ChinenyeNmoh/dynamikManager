@@ -115,7 +115,7 @@ const updateTaskById = async (req, res) => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify({
           type: 'task-update',
-          message: `${req.user.name} updated task: "${updatedTask.title}" in the project "${updatedTask.projectName}".`,
+          message: `${req.user.name} updated task: "${updatedTask.title}" in the project "${updatedTask.project.name}".`,
         }));
       }
     });
@@ -128,15 +128,29 @@ const updateTaskById = async (req, res) => {
 };
 
 
+
 // DELETE a task by ID
 const deleteTaskById = async (req, res) => {
   try {
-    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+    const deletedTask = await Task.findById(req.params.id).populate('project');
     if (!deletedTask) return res.status(404).json({ message: 'Task not found' });
+    
+    await Task.findByIdAndDelete(req.params.id);
+    wss.clients.forEach((client) => {
+      if (client.readyState === client.OPEN) {
+        client.send(JSON.stringify({
+          type: 'task-deletion',
+          message: `${req.user.name} deleted task: "${deletedTask.title}" from the project "${deletedTask.project.name}".`,
+        }));
+      }
+    });
+
     res.status(200).json({ message: 'Task deleted successfully' });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ message: 'Error deleting task', error });
   }
 };
+
 
 export { createTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById };

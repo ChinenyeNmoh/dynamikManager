@@ -93,8 +93,6 @@ const handleDelete = async () => {
 if (result.isConfirmed) {
     try {
         await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`, { withCredentials: true });
-        
-        toast.success("Task deleted ");
         router.push("/alltasks");
 
     } catch (error) {

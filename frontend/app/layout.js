@@ -10,7 +10,7 @@ const MainLayout = ({ children }) => {
 
   useEffect(() => {
     const createWebSocket = () => {
-      websocketRef.current = new WebSocket('wss://localhost:5000');
+      websocketRef.current = new WebSocket('ws://localhost:5000');
 
       websocketRef.current.onopen = () => {
         console.log('WebSocket connection established');
@@ -21,7 +21,7 @@ const MainLayout = ({ children }) => {
       websocketRef.current.onmessage = async (event) => {
         try {
           const message = JSON.parse(event.data);
-          if (message.type === 'task-update' || message.type === 'task-creation') {
+          if (message.type === 'task-update' || message.type === 'task-creation' || message.type === 'task-deletion') {
             toast.success(message.message);
 
           }
